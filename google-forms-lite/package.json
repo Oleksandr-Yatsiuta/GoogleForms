@@ -1,0 +1,13 @@
+{
+  "name": "google-forms-lite",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter server dev\" \"pnpm --filter client start\""
+  },
+  "pnpm": {
+    "shamefully-hoist": true
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
