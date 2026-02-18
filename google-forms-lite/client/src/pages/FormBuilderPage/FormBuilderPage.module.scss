@@ -1,6 +1,6 @@
 .formBuilder {
     min-height: 100vh;
-    background-color: #f7d3ef;
+    background-color: #f0e6ff;
     display: flex;
     flex-direction: column;
 }
@@ -22,7 +22,27 @@
         padding: 0 24px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+
+        .buttonBlock {
+            display: flex;
+            width: 50%;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 16px;
+            height: 87px;
+
+            .FormBuilderBtn {
+                font-size: 14px;
+                text-decoration: none;
+                color: black;
+            }
+
+            .active {
+                color: blueviolet;
+                border-bottom: 2px solid blueviolet;
+            }
+        }
 
         h1 {
             margin: 0;

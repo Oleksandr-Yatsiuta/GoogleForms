@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/HomePage/HomePage';
 import FormBuilderPage from './pages/FormBuilderPage/FormBuilderPage';
+import ResponsesPage from './pages/ResponsesPage/ResponsesPage';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/forms/new' element={<FormBuilderPage />} />
+        <Route path='/forms/:formId/responses' element={<ResponsesPage />} />
       </Routes>
 
     </div>
