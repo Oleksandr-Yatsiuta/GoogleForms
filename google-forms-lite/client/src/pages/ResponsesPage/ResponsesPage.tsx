@@ -2,60 +2,8 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormBuilderHeader from '../components/FormBuiderHeader';
 import styles from './ResponsesPage.module.scss';
-import { Form, FormQuestion } from '../../features/forms/form';
-import { Response } from '../../features/responses/response';
-
-// Мок-дані
-const mockForm: Form = {
-  id: '1',
-  title: 'Customer Feedback Form',
-  description: '',
-  questions: [
-    {
-      id: 'q1',
-      title: 'What is your name?',
-      type: 'TEXT',
-      required: true,
-    },
-    {
-      id: 'q2',
-      title: 'How satisfied are you with our service?',
-      type: 'MULTIPLE_CHOICE',
-      required: true,
-      options: ['Very Satisfied', 'Satisfied', 'Neutral', 'Dissatisfied'],
-    },
-    {
-      id: 'q3',
-      title: 'Which features do you like?',
-      type: 'CHECKBOX',
-      required: false,
-      options: ['Easy to use', 'Fast', 'Reliable', 'Good support'],
-    },
-  ],
-};
-
-const mockResponses: Response[] = [
-  {
-    id: 'r1',
-    formId: '1',
-    answers: [
-      { questionId: 'q1', value: 'John Doe' },
-      { questionId: 'q2', value: 'Very Satisfied' },
-      { questionId: 'q3', value: ['Easy to use', 'Reliable'] },
-    ],
-    submittedAt: '2025-02-15T10:30:00Z',
-  },
-  {
-    id: 'r2',
-    formId: '1',
-    answers: [
-      { questionId: 'q1', value: 'Jane Smith' },
-      { questionId: 'q2', value: 'Satisfied' },
-      { questionId: 'q3', value: ['Fast', 'Good support'] },
-    ],
-    submittedAt: '2025-02-16T14:45:00Z',
-  },
-];
+import { FormQuestion } from '../../features/forms/form';
+import { useGetFormQuery, useGetResponsesQuery } from '../../services/api';
 
 const ITEMS_PER_PAGE = 1;
 
@@ -63,14 +11,24 @@ export default function ResponsesPage() {
   const { formId } = useParams<{ formId: string }>();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const form = mockForm;
-  const responses = mockResponses.filter((r) => r.formId === form.id);
+  const {
+    data: form,
+    isLoading: isFormLoading,
+    isError: isFormError,
+  } = useGetFormQuery(formId ?? '', { skip: !formId });
+
+  const {
+    data: responses = [],
+    isLoading: isResponsesLoading,
+    isError: isResponsesError,
+  } = useGetResponsesQuery(formId ?? '', { skip: !formId });
+
   const totalPages = Math.ceil(responses.length / ITEMS_PER_PAGE);
   const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedResponses = responses.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
   const getQuestionById = (questionId: string): FormQuestion | undefined => {
-    return form.questions.find((q) => q.id === questionId);
+    return form?.questions.find((q) => q.id === questionId);
   };
 
   const formatDate = (dateString: string | undefined) => {
@@ -94,9 +52,48 @@ export default function ResponsesPage() {
     return value;
   };
 
+  if (!formId) {
+    return (
+      <div className={styles.responsesPage}>
+        <FormBuilderHeader formId="" onSave={() => {}} />
+        <div className={styles.container}>
+          <div className={styles.emptyState}>
+            <p>Form ID is missing</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isFormLoading || isResponsesLoading) {
+    return (
+      <div className={styles.responsesPage}>
+        <FormBuilderHeader formId={formId} onSave={() => {}} />
+        <div className={styles.container}>
+          <div className={styles.emptyState}>
+            <p>Loading responses...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isFormError || isResponsesError || !form) {
+    return (
+      <div className={styles.responsesPage}>
+        <FormBuilderHeader formId={formId} onSave={() => {}} />
+        <div className={styles.container}>
+          <div className={styles.emptyState}>
+            <p>Failed to load form or responses</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.responsesPage}>
-      <FormBuilderHeader formId={formId || ''} onSave={() => {}} />
+      <FormBuilderHeader formId={formId} onSave={() => {}} />
 
       <div className={styles.container}>
         <section className={styles.header}>
