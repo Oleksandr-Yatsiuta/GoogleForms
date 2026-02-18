@@ -9,6 +9,7 @@ export const api = createApi({
   baseQuery: graphqlRequestBaseQuery({
     url: 'http://localhost:4000/graphql',
   }),
+  tagTypes: ['Form', 'Response'],
   endpoints: (builder) => ({
     getForms: builder.query<Form[], void>({
       query: () => ({
@@ -23,6 +24,8 @@ export const api = createApi({
           }
         `,
       }),
+      transformResponse: (response: { forms: Form[] }) => response.forms,
+      providesTags: ['Form'],
     }),
 
     getForm: builder.query<Form, string>({
@@ -46,6 +49,8 @@ export const api = createApi({
         `,
         variables: { id },
       }),
+      transformResponse: (response: { form: Form }) => response.form,
+      providesTags: (result, error, id) => [{ type: 'Form' as const, id }],
     }),
 
     getResponses: builder.query<Response[], string>({
@@ -65,6 +70,8 @@ export const api = createApi({
         `,
         variables: { formId },
       }),
+      transformResponse: (response: { responses: Response[] }) => response.responses,
+      providesTags: (result, error, formId) => [{ type: 'Response' as const, id: formId }],
     }),
 
     createForm: builder.mutation<Form, FormInput>({
@@ -85,6 +92,38 @@ export const api = createApi({
           questions: input.questions,
         },
       }),
+      transformResponse: (response: { createForm: Form }) => response.createForm,
+      invalidatesTags: ['Form'],
+    }),
+
+    updateForm: builder.mutation<Form, { id: string } & FormInput>({
+      query: ({ id, ...input }) => ({
+        document: gql`
+          mutation UpdateForm($id: ID!, $title: String!, $description: String, $questions: [QuestionInput!]) {
+            updateForm(id: $id, title: $title, description: $description, questions: $questions) {
+              id
+              title
+              description
+              createdAt
+              questions {
+                id
+                title
+                type
+                options
+                required
+              }
+            }
+          }
+        `,
+        variables: {
+          id,
+          title: input.title,
+          description: input.description,
+          questions: input.questions,
+        },
+      }),
+      transformResponse: (response: { updateForm: Form }) => response.updateForm,
+      invalidatesTags: ['Form'],
     }),
 
     submitResponse: builder.mutation<Response, { formId: string; answers: AnswerInput[] }>({
@@ -104,6 +143,8 @@ export const api = createApi({
         `,
         variables: { formId, answers },
       }),
+      transformResponse: (response: { submitResponse: Response }) => response.submitResponse,
+      invalidatesTags: (result, error, { formId }) => [{ type: 'Response' as const, id: formId }],
     }),
   }),
 })
@@ -113,5 +154,6 @@ export const {
   useGetFormQuery,
   useGetResponsesQuery,
   useCreateFormMutation,
+  useUpdateFormMutation,
   useSubmitResponseMutation,
 } = api

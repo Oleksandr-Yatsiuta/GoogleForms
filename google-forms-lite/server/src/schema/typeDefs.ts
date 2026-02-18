@@ -54,6 +54,7 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createForm(title: String!, description: String, questions: [QuestionInput!]): Form!
+    updateForm(id: ID!, title: String!, description: String, questions: [QuestionInput!]): Form
     submitResponse(formId: ID!, answers: [AnswerInput!]!): Response
   }
 `;

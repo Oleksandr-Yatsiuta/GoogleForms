@@ -1,24 +1,54 @@
-import { store, Question, Answer as StoreAnswer } from '../data/store';
+import { store, Question, Answer as StoreAnswer, Form, Response } from '../data/store';
+
+interface CreateFormArgs {
+  title: string;
+  description?: string;
+  questions?: QuestionInput[];
+}
+
+interface UpdateFormArgs {
+  id: string;
+  title: string;
+  description?: string;
+  questions?: QuestionInput[];
+}
+
+interface QuestionInput {
+  title: string;
+  type: 'TEXT' | 'MULTIPLE_CHOICE' | 'CHECKBOX' | 'DATE';
+  options?: string[];
+  required?: boolean;
+}
+
+interface SubmitResponseArgs {
+  formId: string;
+  answers: AnswerInput[];
+}
+
+interface AnswerInput {
+  questionId: string;
+  value: string | string[];
+}
 
 export const resolvers = {
   Query: {
-    forms: () => {
+    forms: (): Form[] => {
       return store.getForms();
     },
-    form: ({ id }: { id: string }) => {
+    form: ({ id }: { id: string }): Form | undefined => {
       return store.getForm(id);
     },
-    responses: ({ formId }: { formId: string }) => {
+    responses: ({ formId }: { formId: string }): Response[] => {
       return store.getResponses(formId);
     },
   },
 
   Mutation: {
-    createForm: ({ title, description, questions }: { title: string; description?: string; questions?: any[] }) => {
+    createForm: ({ title, description, questions }: CreateFormArgs): Form => {
       const safeTitle =
         typeof title === 'string' && title.trim().length > 0 ? title : 'Untitled Form';
 
-      const formQuestions: Question[] = (questions || []).map((q: any) => ({
+      const formQuestions: Question[] = (questions || []).map((q) => ({
         id: `q-${Math.random().toString(36).substr(2, 9)}`,
         title:
           typeof q.title === 'string' && q.title.trim().length > 0
@@ -32,8 +62,26 @@ export const resolvers = {
       return store.createForm(safeTitle, description, formQuestions);
     },
 
-    submitResponse: ({ formId, answers }: { formId: string; answers: any[] }) => {
-      const storeAnswers: StoreAnswer[] = answers.map((a: any) => ({
+    updateForm: ({ id, title, description, questions }: UpdateFormArgs): Form | null => {
+      const safeTitle =
+        typeof title === 'string' && title.trim().length > 0 ? title : 'Untitled Form';
+
+      const formQuestions: Question[] = (questions || []).map((q) => ({
+        id: `q-${Math.random().toString(36).substr(2, 9)}`,
+        title:
+          typeof q.title === 'string' && q.title.trim().length > 0
+            ? q.title
+            : 'Untitled Question',
+        type: q.type,
+        options: Array.isArray(q.options) ? q.options : [],
+        required: q.required === true,
+      }));
+
+      return store.updateForm(id, safeTitle, description, formQuestions);
+    },
+
+    submitResponse: ({ formId, answers }: SubmitResponseArgs): Response | null => {
+      const storeAnswers: StoreAnswer[] = answers.map((a) => ({
         questionId: a.questionId,
         value: Array.isArray(a.value) ? a.value : [a.value],
       }));
@@ -43,10 +91,10 @@ export const resolvers = {
   },
 
   Form: {
-    createdAt: (form: any) => form.createdAt,
+    createdAt: (form: Form): string => form.createdAt,
   },
 
   Response: {
-    submittedAt: (response: any) => response.submittedAt,
+    submittedAt: (response: Response): string => response.submittedAt,
   },
 };

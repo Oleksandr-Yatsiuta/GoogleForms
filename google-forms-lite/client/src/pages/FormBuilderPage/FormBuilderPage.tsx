@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styles from './FormBuilderPage.module.scss';
-import { Form, FormQuestion, QuestionType , QuestionCardProps } from '../../features/forms/form';
+import { Form, FormQuestion, QuestionType, QuestionCardProps } from '../../features/forms/form';
 import FormBuilderHeader from '../components/FormBuiderHeader';
-import { useCreateFormMutation } from '../../services/api';
+import { useCreateFormMutation, useGetFormQuery, useUpdateFormMutation } from '../../services/api';
 
 
 export default function FormBuilderPage() {
+  const { formId } = useParams<{ formId: string }>();
+  const [updateForm] = useUpdateFormMutation();
   const [createForm] = useCreateFormMutation();
+  const { data: existingForm, isLoading } = useGetFormQuery(formId || '', {
+    skip: !formId || formId === 'new',
+  });
+
 
   const [form, setForm] = useState<Form>({
     id: Date.now().toString(),
@@ -22,6 +29,15 @@ export default function FormBuilderPage() {
   });
 
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (existingForm) {
+      setForm(existingForm);
+    }
+  }, [existingForm]);
+  if (isLoading) {
+    return <div>Loading form...</div>;
+  }
 
   const handleFormTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, title: e.target.value });
@@ -82,24 +98,32 @@ export default function FormBuilderPage() {
   };
 
 
-const handleSaveForm = async () => {
-  try {
-    const payload = {
-      title: form.title,
-      description: form.description,
-      questions: form.questions.map((q) => ({
-        title: q.title,
-        type: q.type,
-        required: q.required ?? false,
-        options: q.options ?? [],
-      })),
-    };
-    console.log('createForm payload', payload);
-    await createForm(payload);
-  } catch (error) {
-    console.error('Create form failed:', error);
-  }
-};
+  const handleSaveForm = async () => {
+    try {
+      const payload = {
+        title: form.title,
+        description: form.description,
+        questions: form.questions.map((q) => ({
+          title: q.title,
+          type: q.type,
+          required: q.required ?? false,
+          options: q.options ?? [],
+        })),
+      };
+
+      if (formId && formId !== 'new') {
+        // Оновлюємо існуючу форму
+        console.log('updateForm payload', payload);
+        await updateForm({ id: formId, ...payload });
+      } else {
+        // Створюємо нову форму
+        console.log('createForm payload', payload);
+        await createForm(payload);
+      }
+    } catch (error) {
+      console.error('Save form failed:', error);
+    }
+  };
 
 
   return (
