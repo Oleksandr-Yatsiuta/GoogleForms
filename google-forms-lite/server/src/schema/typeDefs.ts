@@ -8,7 +8,7 @@ export const typeDefs = `#graphql
 
   type Question {
     id: ID!
-    text: String!
+    title: String!
     type: QuestionType!
     options: [String!]
     required: Boolean!
@@ -35,7 +35,7 @@ export const typeDefs = `#graphql
   }
 
   input QuestionInput {
-    text: String!
+    title: String!
     type: QuestionType!
     options: [String!]
     required: Boolean!

@@ -62,7 +62,6 @@ const ITEMS_PER_PAGE = 1;
 export default function ResponsesPage() {
   const { formId } = useParams<{ formId: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
 
   const form = mockForm;
   const responses = mockResponses.filter((r) => r.formId === form.id);
