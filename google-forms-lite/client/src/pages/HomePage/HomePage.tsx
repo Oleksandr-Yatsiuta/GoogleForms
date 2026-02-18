@@ -7,12 +7,16 @@ export default function HomePage() {
 
       <section className={styles.header}>
         <div className={styles.container}>
-          <p>Forms</p>
+          <div className={styles.leftSide}>
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968528.png" />
+            <p>Forms</p>
+          </div>
           <div className={styles.inputForm}>
+
             <img src="https://img.icons8.com/?size=100&id=e4NkZ7kWAD7f&format=png&color=00448e" alt="Search Icon" />
             <input type="text" placeholder="Search forms..." className={styles.searchInput} />
           </div>
-          <a className={styles.createFormLink}><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Create Form" /></a>
+          <a className={styles.createFormLink}><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User profile icon for account settings" /></a>
         </div>
       </section>
       <section className={styles.content}>
@@ -27,6 +31,15 @@ export default function HomePage() {
           </div>
         </div>
       </section >
+      <section className={styles.FillBlock}>
+        <div className={styles.container}>
+          <p>Recent froms</p>
+          <div className={styles.recentForms}>
+            <img src="https://static0.anpoimages.com/wordpress/wp-content/uploads/2024/05/google-forms-short-response-template.jpg?q=70&fit=crop&w=825&dpr=1"/>
+            <p>form title</p>
+            </div>
+          </div>
+      </section>
     </div >
   );
 }

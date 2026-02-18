@@ -5,42 +5,34 @@ export const resolvers = {
     forms: () => {
       return store.getForms();
     },
-    form: (_: any, { id }: { id: string }) => {
+    form: ({ id }: { id: string }) => {
       return store.getForm(id);
     },
-    responses: (_: any, { formId }: { formId: string }) => {
+    responses: ({ formId }: { formId: string }) => {
       return store.getResponses(formId);
     },
   },
 
   Mutation: {
-    createForm: (
-      _: any,
-      {
-        title,
-        description,
-        questions,
-      }: {
-        title: string;
-        description?: string;
-        questions?: any[];
-      }
-    ) => {
+    createForm: ({ title, description, questions }: { title: string; description?: string; questions?: any[] }) => {
+      const safeTitle =
+        typeof title === 'string' && title.trim().length > 0 ? title : 'Untitled Form';
+
       const formQuestions: Question[] = (questions || []).map((q: any) => ({
         id: `q-${Math.random().toString(36).substr(2, 9)}`,
-        text: q.text,
+        title:
+          typeof q.title === 'string' && q.title.trim().length > 0
+            ? q.title
+            : 'Untitled Question',
         type: q.type,
-        options: q.options || [],
-        required: q.required !== false,
+        options: Array.isArray(q.options) ? q.options : [],
+        required: q.required === true,
       }));
 
-      return store.createForm(title, description, formQuestions);
+      return store.createForm(safeTitle, description, formQuestions);
     },
 
-    submitResponse: (
-      _: any,
-      { formId, answers }: { formId: string; answers: any[] }
-    ) => {
+    submitResponse: ({ formId, answers }: { formId: string; answers: any[] }) => {
       const storeAnswers: StoreAnswer[] = answers.map((a: any) => ({
         questionId: a.questionId,
         value: Array.isArray(a.value) ? a.value : [a.value],
@@ -51,10 +43,10 @@ export const resolvers = {
   },
 
   Form: {
-    createdAt: (form: any) => form.createdAt.toISOString(),
+    createdAt: (form: any) => form.createdAt,
   },
 
   Response: {
-    submittedAt: (response: any) => response.submittedAt.toISOString(),
+    submittedAt: (response: any) => response.submittedAt,
   },
 };

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import styles from './FormBuilderPage.module.scss';
 import { Form, FormQuestion, QuestionType , QuestionCardProps } from '../../features/forms/form';
 import FormBuilderHeader from '../components/FormBuiderHeader';
+import { useCreateFormMutation } from '../../services/api';
 
 
 export default function FormBuilderPage() {
+  const [createForm] = useCreateFormMutation();
+
   const [form, setForm] = useState<Form>({
     id: Date.now().toString(),
     title: 'Untitled Form',
@@ -78,9 +81,26 @@ export default function FormBuilderPage() {
     }
   };
 
-  const handleSaveForm = () => {
-    console.log('Saving form:', form);
-  };
+
+const handleSaveForm = async () => {
+  try {
+    const payload = {
+      title: form.title,
+      description: form.description,
+      questions: form.questions.map((q) => ({
+        title: q.title,
+        type: q.type,
+        required: q.required ?? false,
+        options: q.options ?? [],
+      })),
+    };
+    console.log('createForm payload', payload);
+    await createForm(payload);
+  } catch (error) {
+    console.error('Create form failed:', error);
+  }
+};
+
 
   return (
     <div className={styles.formBuilder}>

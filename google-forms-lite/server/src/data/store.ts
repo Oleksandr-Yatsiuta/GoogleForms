@@ -7,12 +7,12 @@ export interface Response {
   id: string;
   formId: string;
   answers: Answer[];
-  submittedAt: Date;
+  submittedAt: string;
 }
 
 export interface Question {
   id: string;
-  text: string;
+  title: string;
   type: 'TEXT' | 'MULTIPLE_CHOICE' | 'CHECKBOX' | 'DATE';
   options?: string[];
   required: boolean;
@@ -23,7 +23,7 @@ export interface Form {
   title: string;
   description?: string;
   questions: Question[];
-  createdAt: Date;
+  createdAt: string;
 }
 
 class Store {
@@ -39,11 +39,11 @@ class Store {
       id,
       title,
       description,
-      questions: questions.map(q => ({
+      questions: questions.map((q) => ({
         ...q,
         id: q.id || `question-${this.questionIdCounter++}`,
       })),
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     };
     this.forms.set(id, form);
     this.responses.set(id, []);
@@ -66,7 +66,7 @@ class Store {
       id,
       formId,
       answers,
-      submittedAt: new Date(),
+      submittedAt: new Date().toISOString(),
     };
 
     const formResponses = this.responses.get(formId) || [];
