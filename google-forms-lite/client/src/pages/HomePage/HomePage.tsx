@@ -21,11 +21,11 @@ export default function HomePage() {
             <p>Make a new form</p>
             <div className={styles.formBlock}>
               <Link to="/forms/new"><img src="https://ssl.gstatic.com/docs/templates/thumbnails/forms-blank-googlecolors.png" alt="Create Form Icon" /></Link>
-            <p className={styles.createFormTitle}>Blank Form</p>
-          </div>
+              <p className={styles.createFormTitle}>Blank Form</p>
+            </div>
 
+          </div>
         </div>
-    </div>
       </section >
     </div >
   );

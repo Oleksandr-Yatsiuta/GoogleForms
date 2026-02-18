@@ -28,3 +28,13 @@ export interface FormQuestionInput {
   required?: boolean;
   options?: string[];
 }
+export interface QuestionCardProps {
+  question: FormQuestion;
+  isEditing: boolean;
+  onEdit: () => void;
+  onUpdate: (updates: Partial<FormQuestion>) => void;
+  onDelete: () => void;
+  onAddOption: () => void;
+  onUpdateOption: (optionIndex: number, value: string) => void;
+  onDeleteOption: (optionIndex: number) => void;
+}

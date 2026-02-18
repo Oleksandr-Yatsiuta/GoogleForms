@@ -2,6 +2,7 @@
   "name": "google-forms-lite",
   "private": true,
   "scripts": {
+    "predev": "pnpm install -r --prefer-offline",
     "dev": "concurrently \"pnpm --filter server dev\" \"pnpm --filter client start\""
   },
   "pnpm": {

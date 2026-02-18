@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from './FormBuilderPage.module.scss';
-import { Form, FormQuestion, QuestionType } from '../../features/forms/form';
+import { Form, FormQuestion, QuestionType , QuestionCardProps } from '../../features/forms/form';
+import FormBuilderHeader from '../components/FormBuiderHeader';
+
 
 export default function FormBuilderPage() {
   const [form, setForm] = useState<Form>({
@@ -82,14 +84,7 @@ export default function FormBuilderPage() {
 
   return (
     <div className={styles.formBuilder}>
-      <header className={styles.header}>
-        <div className={styles.headerContent}>
-          <h1>New form</h1>
-          <button className={styles.saveBtn} onClick={handleSaveForm}>
-            Save
-          </button>
-        </div>
-      </header>
+      <FormBuilderHeader formId={form.id} onSave={handleSaveForm} />
 
       <div className={styles.container}>
         <section className={styles.formInfo}>
@@ -138,16 +133,6 @@ export default function FormBuilderPage() {
   );
 }
 
-interface QuestionCardProps {
-  question: FormQuestion;
-  isEditing: boolean;
-  onEdit: () => void;
-  onUpdate: (updates: Partial<FormQuestion>) => void;
-  onDelete: () => void;
-  onAddOption: () => void;
-  onUpdateOption: (optionIndex: number, value: string) => void;
-  onDeleteOption: (optionIndex: number) => void;
-}
 
 function QuestionCard({
   question,
