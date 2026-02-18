@@ -72,7 +72,15 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-
+        .formsGrid{
+            width: 100%;
+            flex-wrap: wrap;
+            display: flex;
+            gap: 20px;
+            img{
+                height: 118px
+            };
+        }
         p {
             font-size: 18px;
             margin-bottom: 24px;
@@ -116,21 +124,37 @@
         flex-direction: column;
 
         p {
-            font-size: 24px;
+            font-size: 18px;
         }
 
-        .recentForms {
-            max-width: 22%;
+        .formsGrid {
+            display: flex;
+            gap: 20px;
             cursor: pointer;
-            text-align: start;
-            background-color: rgba(221, 217, 217, 0.2);
-            p{
-                font-size: 15px;
-                text-align: center;
-            }
 
-            img {
-                width: 100%;
+            .recentForms {
+                max-width: 22%;
+                background-color: rgba(221, 217, 217, 0.2);
+                text-align: center;
+
+                p {
+                    font-size: 15px;
+                    text-align: center;
+                }
+
+                img {
+                    width: 100%;
+                }
+
+                &:hover img {
+                    filter: drop-shadow(0 0 1px #8B00FF);
+                }
+
+                &:hover {
+                    img {
+                        border: 1px solid purple;
+                    }
+                }
             }
         }
     }

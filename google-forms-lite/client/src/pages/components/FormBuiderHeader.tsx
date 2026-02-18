@@ -1,4 +1,4 @@
-import { Link, NavLink} from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 import styles from '../FormBuilderPage/FormBuilderPage.module.scss';
 
 interface FormBuilderHeaderProps {
@@ -7,24 +7,39 @@ interface FormBuilderHeaderProps {
 }
 
 export default function FormBuilderHeader({ formId, onSave }: FormBuilderHeaderProps) {
+    const { formId: routeFormId } = useParams<{ formId: string }>();
+    const isEditing = routeFormId && routeFormId !== 'new';
+    
     return (
         <header className={styles.header}>
             <div className={styles.headerContent}>
                 <div className={styles.leftSide}>
                     <NavLink to="/"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968528.png" /></NavLink>
-                    <p>New Forms</p>
+                    <p>{isEditing ? 'Edit Form' : 'New Form'}</p>
                 </div>
 
                 <div className={styles.buttonBlock}>
-                    <NavLink
-                        to="/forms/new"
-                        end
-                        className={({ isActive }) =>
-                            `${styles.FormBuilderBtn} ${isActive ? styles.active : ''}`
-                        }
-                    >
-                        Questions
-                    </NavLink>
+                    {isEditing ? (
+                        <NavLink
+                            to={`/forms/${routeFormId}/edit`}
+                            end
+                            className={({ isActive }) =>
+                                `${styles.FormBuilderBtn} ${isActive ? styles.active : ''}`
+                            }
+                        >
+                            Questions
+                        </NavLink>
+                    ) : (
+                        <NavLink
+                            to="/forms/new"
+                            end
+                            className={({ isActive }) =>
+                                `${styles.FormBuilderBtn} ${isActive ? styles.active : ''}`
+                            }
+                        >
+                            Questions
+                        </NavLink>
+                    )}
 
                     <NavLink
                         to={`/forms/${formId}/responses`}

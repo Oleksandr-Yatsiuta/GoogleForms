@@ -50,6 +50,23 @@ class Store {
     return form;
   }
 
+  updateForm(id: string, title: string, description?: string, questions: Question[] = []): Form | null {
+    const existingForm = this.forms.get(id);
+    if (!existingForm) return null;
+
+    const updatedForm: Form = {
+      ...existingForm,
+      title,
+      description,
+      questions: questions.map((q) => ({
+        ...q,
+        id: q.id || `question-${this.questionIdCounter++}`,
+      })),
+    };
+    this.forms.set(id, updatedForm);
+    return updatedForm;
+  }
+
   getForms(): Form[] {
     return Array.from(this.forms.values());
   }
