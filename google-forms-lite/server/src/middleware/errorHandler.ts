@@ -1,11 +1,6 @@
 import type { ErrorRequestHandler } from 'express';
 import { GraphQLError, type GraphQLFormattedError } from 'graphql';
 
-type ErrorExtensions = {
-  code: string;
-  status: number;
-};
-
 export class HttpError extends Error {
   statusCode: number;
   code: string;

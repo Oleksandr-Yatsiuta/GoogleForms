@@ -26,7 +26,7 @@ export default function HomePage() {
       <section className={styles.content}>
         <div className={styles.makeForm}>
           <div className={styles.container}>
-            <p>Make a new form</p>
+            <p className={styles.makeFormTitle}>Make a new form</p>
             <div className={styles.formsGrid}>
               <div className={styles.formBlock}>
                 <Link to="/forms/new">
@@ -56,7 +56,7 @@ export default function HomePage() {
 
       <section className={styles.FillBlock}>
         <div className={styles.container}>
-          <p>Recent forms for filling</p>
+          <p className={styles.makeFormTitle}>FORMS FOR FILLING</p>
           {isLoading ? (
             <p>Loading forms...</p>
           ) : (
