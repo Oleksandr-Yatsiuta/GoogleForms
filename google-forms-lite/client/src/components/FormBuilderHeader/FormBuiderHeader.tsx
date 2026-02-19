@@ -8,7 +8,7 @@ interface FormBuilderHeaderProps {
 
 export default function FormBuilderHeader({ formId, onSave }: FormBuilderHeaderProps) {
     const { formId: routeFormId } = useParams<{ formId: string }>();
-    const isEditing = routeFormId && routeFormId !== 'new';
+    const isEditing = Boolean(routeFormId && routeFormId !== 'new');
     
     return (
         <header className={styles.header}>
@@ -41,15 +41,17 @@ export default function FormBuilderHeader({ formId, onSave }: FormBuilderHeaderP
                         </NavLink>
                     )}
 
-                    <NavLink
-                        to={`/forms/${formId}/responses`}
-                        end
-                        className={({ isActive }) =>
-                            `${styles.FormBuilderBtn} ${isActive ? styles.active : ''}`
-                        }
-                    >
-                        Responses
-                    </NavLink>
+                    {isEditing && (
+                        <NavLink
+                            to={`/forms/${formId}/responses`}
+                            end
+                            className={({ isActive }) =>
+                                `${styles.FormBuilderBtn} ${isActive ? styles.active : ''}`
+                            }
+                        >
+                            Responses
+                        </NavLink>
+                    )}
                 </div>
 
                 <Link to={`/`}><button className={styles.saveBtn} onClick={onSave}>

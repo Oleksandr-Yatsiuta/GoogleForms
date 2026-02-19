@@ -28,7 +28,7 @@
 
     h1 {
         margin: 0;
-        font-size: 28px;
+        font-size: 1.75em;
         font-weight: 500;
         color: #202124;
     }
@@ -37,7 +37,7 @@
 .moreBtn {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 1.5em;
     cursor: pointer;
     color: #5f6368;
     transition: color 0.2s;
@@ -57,7 +57,7 @@
 
     .responseCount {
         margin: 0;
-        font-size: 16px;
+        font-size: 1em;
         font-weight: 500;
         color: #202124;
     }
@@ -80,7 +80,7 @@
 
     h3 {
         margin: 0;
-        font-size: 16px;
+        font-size: 1em;
         font-weight: 500;
         color: #202124;
     }
@@ -92,7 +92,7 @@
     gap: 16px;
 
     .timestamp {
-        font-size: 13px;
+        font-size: 0.8125em;
         color: #9aa0a6;
     }
 }
@@ -108,14 +108,14 @@
     .questionInfo {
         .questionText {
             margin: 0 0 8px 0;
-            font-size: 14px;
+            font-size: 0.875em;
             font-weight: 500;
             color: #5f6368;
         }
 
         .answerText {
             margin: 0;
-            font-size: 16px;
+            font-size: 1em;
             color: #202124;
             padding: 12px;
             background-color: #f8f9fa;
@@ -143,7 +143,7 @@
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.875em;
     transition: all 0.2s;
 
     &:hover:not(:disabled) {
@@ -157,7 +157,7 @@
 }
 
 .pageInfo {
-    font-size: 14px;
+    font-size: 0.875em;
     color: #5f6368;
     min-width: 60px;
     text-align: center;
@@ -171,7 +171,7 @@
 
     p {
         margin: 0;
-        font-size: 16px;
+        font-size: 1em;
         color: #5f6368;
     }
 }
@@ -182,7 +182,54 @@
         padding: 12px;
     }
 
+    .header,
+    .responseCard,
+    .pagination,
+    .emptyState {
+        border-radius: 6px;
+    }
+
+    .header {
+        padding: 16px;
+    }
+
+    .cardHeader {
+        padding: 12px 16px;
+        align-items: flex-start;
+        gap: 8px;
+        flex-direction: column;
+    }
+
+    .cardMeta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
     .answers {
         padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .headerTop {
+        flex-direction: column;
+        gap: 8px;
+
+        h1 {
+            font-size: 1.3em;
+        }
+    }
+
+    .pagination {
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .answerItem {
+        .questionInfo {
+            .answerText {
+                padding: 10px;
+            }
+        }
     }
 }
