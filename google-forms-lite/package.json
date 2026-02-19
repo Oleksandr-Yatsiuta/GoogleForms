@@ -3,12 +3,19 @@
   "private": true,
   "scripts": {
     "predev": "pnpm install -r --prefer-offline",
-    "dev": "concurrently \"pnpm --filter server dev\" \"pnpm --filter client start\""
+    "dev": "concurrently \"pnpm --filter server dev\" \"pnpm --filter client start\"",
+    "test": "pnpm run test:client && pnpm run test:server",
+    "test:client": "pnpm --filter ./client test",
+    "test:server": "pnpm --filter ./server test",
+    "test:watch": "pnpm --parallel --filter ./client --filter ./server test:watch",
+    "test:coverage": "pnpm -C server test:coverage && pnpm -C client test:coverage",
+    "prepare": "husky"
   },
   "pnpm": {
     "shamefully-hoist": true
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.0.0",
+    "husky": "^9.0.0"
   }
 }
