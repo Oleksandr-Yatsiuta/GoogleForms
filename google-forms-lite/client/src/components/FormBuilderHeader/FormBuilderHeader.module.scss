@@ -25,7 +25,7 @@
                 height: 40px;
             }
             p{
-                font-size: 24px;
+                font-size: 1.5em;
                 font-weight: bold;
             }
         }
@@ -39,7 +39,7 @@
             height: 87px;
 
             .FormBuilderBtn {
-                font-size: 14px;
+                font-size: 0.875em;
                 text-decoration: none;
                 color: black;
             }
@@ -52,7 +52,7 @@
 
         h1 {
             margin: 0;
-            font-size: 18px;
+            font-size: 1.125em;
             font-weight: 500;
             color: #202124;
         }
@@ -65,7 +65,7 @@
         padding: 8px 24px;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 0.875em;
         width: 150px;
         font-weight: 500;
         transition: background-color 0.2s;
@@ -76,6 +76,58 @@
 
         &:active {
             background-color: #2850a6;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        height: auto;
+
+        .headerContent {
+            align-items: center;
+
+            .buttonBlock {
+                width: auto;
+                height: auto;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 0;
+
+        .headerContent {
+            padding: 0 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            .leftSide {
+                gap: 10px;
+
+                img {
+                    width: 32px;
+                    height: 32px;
+                }
+
+                p {
+                    font-size: 1.2em;
+                }
+            }
+
+            .buttonBlock {
+                width: 100%;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 12px;
+            }
+        }
+
+        .saveBtn {
+            width: 100%;
+            max-width: 150px;
         }
     }
 }

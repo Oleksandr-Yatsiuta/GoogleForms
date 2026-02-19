@@ -1,10 +1,11 @@
 import styles from './HomePage.module.scss';
 import { Link } from "react-router-dom";
 import { useGetFormsQuery } from '../../services/api';
+import SearchForms from '../../components/SearchForms/SearchForms';
 
 
 export default function HomePage() {
-   // Fetch all forms with automatic caching
+  // Fetch all forms with automatic caching
   const { data: forms = [], isLoading } = useGetFormsQuery();
 
   return (
@@ -15,10 +16,7 @@ export default function HomePage() {
             <img src="https://cdn-icons-png.flaticon.com/512/5968/5968528.png" alt="Forms icon" />
             <p>Forms</p>
           </div>
-          <div className={styles.inputForm}>
-            <img src="https://img.icons8.com/?size=100&id=e4NkZ7kWAD7f&format=png&color=00448e" alt="Search Icon" />
-            <input type="text" placeholder="Search forms..." className={styles.searchInput} />
-          </div>
+          <SearchForms />
           <Link to="/" className={styles.createFormLink}>
             <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User profile" />
           </Link>
@@ -28,7 +26,7 @@ export default function HomePage() {
       <section className={styles.content}>
         <div className={styles.makeForm}>
           <div className={styles.container}>
-            <p>Make a new form</p>
+            <p className={styles.makeFormTitle}>Make a new form</p>
             <div className={styles.formsGrid}>
               <div className={styles.formBlock}>
                 <Link to="/forms/new">
@@ -36,7 +34,7 @@ export default function HomePage() {
                 </Link>
                 <p className={styles.createFormTitle}>Blank Form</p>
               </div>
-              
+
               {isLoading ? (
                 <p>Loading...</p>
               ) : (
@@ -58,7 +56,7 @@ export default function HomePage() {
 
       <section className={styles.FillBlock}>
         <div className={styles.container}>
-          <p>Recent forms for filling</p>
+          <p className={styles.makeFormTitle}>FORMS FOR FILLING</p>
           {isLoading ? (
             <p>Loading forms...</p>
           ) : (

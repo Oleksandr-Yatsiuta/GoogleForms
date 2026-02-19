@@ -2,7 +2,7 @@ import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { describe, it, afterEach, vi, expect } from 'vitest';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import ResponsesPage from './ResponsesPage';
-import { FormQuestion } from '../../features/forms/form';
+import type { FormQuestion } from '../../../../types/form.types';
 
 // -------------------------
 // Mock RTK Query hooks

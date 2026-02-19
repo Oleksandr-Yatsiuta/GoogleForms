@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './FormBuilderPage.module.scss';
-import { Form, FormQuestion, QuestionType, QuestionCardProps } from '../../features/forms/form';
-import FormBuilderHeader from '../../components/FormBuiderHeader';
+import { Form, FormQuestion, QuestionType, QuestionCardProps } from '../../../../types/form.types';
+import FormBuilderHeader from '../../components/FormBuilderHeader/FormBuiderHeader';
 import { useCreateFormMutation, useGetFormQuery, useUpdateFormMutation } from '../../services/api';
+import { generateId } from '../../utils/generateId';
 
 export default function FormBuilderPage() {
   const { formId } = useParams<{ formId: string }>();
@@ -14,11 +15,11 @@ export default function FormBuilderPage() {
   });
 
   const [form, setForm] = useState<Form>({
-    id: Date.now().toString(),
+    id: generateId('form'),
     title: 'Untitled Form',
     description: '',
     questions: [{
-      id: Date.now().toString() + '-q1',
+      id: generateId('question'),
       title: 'Untitled Question',
       type: 'TEXT',
       required: false,
@@ -52,7 +53,7 @@ export default function FormBuilderPage() {
   // Add a new question.
   const addQuestion = () => {
     const newQuestion: FormQuestion = {
-      id: Date.now().toString(),
+      id: generateId('question'),
       title: 'Untitled Question',
       type: 'TEXT',
       required: false,

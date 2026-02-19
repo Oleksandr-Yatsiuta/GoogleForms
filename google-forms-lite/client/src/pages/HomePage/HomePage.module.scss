@@ -7,7 +7,7 @@
         margin: 0 auto;
 
         p {
-            font-size: 24px;
+            font-size: 1.5em;
             font-weight: bold;
         }
 
@@ -15,41 +15,6 @@
             display: flex;
             align-items: center;
             gap: 16px;
-        }
-
-        .inputForm {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px;
-            width: 70%;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 30px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-
-            img {
-                width: 25px;
-                height: 25px;
-                padding: 4px;
-                cursor: pointer;
-            }
-
-            img:hover {
-                background-color: #f0f0f0;
-                border-radius: 100%;
-                cursor: pointer;
-            }
-
-            .searchInput {
-                padding: 4px;
-                border: none;
-                width: 80%;
-            }
-
-            .searchInput:focus {
-                outline: none;
-            }
         }
 
         img {
@@ -72,22 +37,31 @@
         display: flex;
         align-items: flex-start;
         flex-direction: column;
-        .formsGrid{
+
+        .formsGrid {
             width: 100%;
             flex-wrap: wrap;
             display: flex;
             gap: 20px;
-            img{
+
+            img {
                 height: 118px
-            };
+            }
+
+            ;
         }
+
         p {
-            font-size: 18px;
+            font-size: 1.125em;
             margin-bottom: 24px;
         }
 
+        .makeFormTitle {
+            font-weight: bold;
+        }
+
         .formBlock {
-            max-width: 22%;
+            max-width: 15%;
             cursor: pointer;
             text-align: start;
 
@@ -124,7 +98,11 @@
         flex-direction: column;
 
         p {
-            font-size: 18px;
+            font-size: 1.125em;
+        }
+
+        .makeFormTitle {
+            font-weight: bold;
         }
 
         .formsGrid {
@@ -133,12 +111,12 @@
             cursor: pointer;
 
             .recentForms {
-                max-width: 22%;
+                max-width: 20%;
                 background-color: rgba(221, 217, 217, 0.2);
                 text-align: center;
 
                 p {
-                    font-size: 15px;
+                    font-size: 0.9375em;
                     text-align: center;
                 }
 
@@ -154,6 +132,127 @@
                     img {
                         border: 1px solid purple;
                     }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .header {
+        .container {
+            width: 94%;
+            gap: 12px;
+
+            .leftSide {
+                gap: 10px;
+            }
+        }
+    }
+
+    .makeForm {
+        height: auto;
+        padding: 20px 0;
+
+        .container {
+            width: 90%;
+
+            .formsGrid {
+                gap: 16px;
+            }
+
+            .formBlock {
+                max-width: 20%;
+            }
+        }
+    }
+
+    .FillBlock {
+        .container {
+            width: 90%;
+
+            .formsGrid {
+                flex-wrap: wrap;
+                gap: 16px;
+
+                .recentForms {
+                    max-width: 20%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        .container {
+            width: 92%;
+            flex-wrap: wrap;
+
+            p {
+                font-size: 1.2em;
+            }
+
+            img {
+                width: 34px;
+                height: 34px;
+            }
+        }
+    }
+
+    .makeForm {
+        .container {
+            width: 92%;
+
+            .formsGrid {
+                gap: 12px;
+            }
+
+            .formBlock {
+                max-width: 48%;
+            }
+        }
+    }
+
+    .FillBlock {
+        .container {
+            width: 92%;
+
+            .formsGrid {
+                gap: 12px;
+
+                .recentForms {
+                    max-width: 48%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        .container {
+            width: 94%;
+
+            .leftSide {
+                width: 100%;
+            }
+        }
+    }
+
+    .makeForm {
+        .container {
+            .formBlock {
+                max-width: 100%;
+            }
+        }
+    }
+
+    .FillBlock {
+        .container {
+            .formsGrid {
+                .recentForms {
+                    max-width: 100%;
                 }
             }
         }

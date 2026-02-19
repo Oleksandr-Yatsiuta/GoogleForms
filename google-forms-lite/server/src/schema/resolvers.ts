@@ -1,7 +1,7 @@
 import { FormService } from '../services/formService';
 import { ResponseService } from '../services/responseService';
-import { Form, Response } from '../types/form.types';
-import { CreateFormArgs, UpdateFormArgs, SubmitResponseArgs } from '../types/resolver.types';
+import type { Form, Response } from '../../../types/form.types';
+import type { CreateFormArgs, UpdateFormArgs, SubmitResponseArgs } from '../../../types/resolver.types';
 
 // Defines GraphQL resolvers for queries, mutations, and field mappings.
 export const resolvers = {
@@ -35,11 +35,11 @@ export const resolvers = {
 
   // Resolves fields for the Form type.
   Form: {
-    createdAt: (form: Form): string => form.createdAt,
+    createdAt: (form: Form): string => form.createdAt ?? '',
   },
 
   // Resolves fields for the Response type.
   Response: {
-    submittedAt: (response: Response): string => response.submittedAt,
+    submittedAt: (response: Response): string => response.submittedAt ?? '',
   },
 };

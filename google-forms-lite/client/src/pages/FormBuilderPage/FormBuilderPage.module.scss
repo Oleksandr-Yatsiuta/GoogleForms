@@ -20,7 +20,7 @@
 
         .formTitle {
             width: 100%;
-            font-size: 32px;
+            font-size: 2em;
             font-weight: 500;
             border: none;
             outline: none;
@@ -41,7 +41,7 @@
 
         .formDescription {
             width: 100%;
-            font-size: 14px;
+            font-size: 0.875em;
             border: none;
             outline: none;
             resize: none;
@@ -98,7 +98,7 @@
 
     .questionTitle {
         width: 100%;
-        font-size: 16px;
+        font-size: 1em;
         font-weight: 500;
         border: none;
         outline: none;
@@ -129,7 +129,7 @@
         padding: 8px 12px;
         border: 1px solid #dadce0;
         border-radius: 4px;
-        font-size: 13px;
+        font-size: 0.8125em;
         cursor: pointer;
         background-color: #fff;
         color: #202124;
@@ -150,7 +150,7 @@
         align-items: center;
         gap: 6px;
         cursor: pointer;
-        font-size: 13px;
+        font-size: 0.8125em;
         color: #5f6368;
 
         input {
@@ -164,7 +164,7 @@
         background: none;
         border: none;
         cursor: pointer;
-        font-size: 18px;
+        font-size: 1.125em;
         padding: 4px 8px;
         transition: opacity 0.2s;
         margin-left: auto;
@@ -192,7 +192,7 @@
             padding: 8px 12px;
             border: 1px solid #dadce0;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 0.8125em;
             font-family: 'Roboto', sans-serif;
             transition: border-color 0.2s;
 
@@ -213,7 +213,7 @@
         border: none;
         cursor: pointer;
         color: #9aa0a6;
-        font-size: 16px;
+        font-size: 1em;
         padding: 4px 8px;
         transition: color 0.2s;
 
@@ -227,7 +227,7 @@
         border: none;
         color: #4285f4;
         cursor: pointer;
-        font-size: 13px;
+        font-size: 0.8125em;
         padding: 8px 0;
         transition: color 0.2s;
 
@@ -250,7 +250,7 @@
         padding: 12px 24px;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 0.875em;
         font-weight: 500;
         transition: all 0.2s;
         font-family: 'Roboto', sans-serif;
@@ -273,7 +273,7 @@
         gap: 12px;
 
         h1 {
-            font-size: 16px;
+            font-size: 1em;
         }
     }
 
@@ -292,7 +292,7 @@
     }
 
     .formTitle {
-        font-size: 24px;
+        font-size: 1.5em;
     }
 
     .questionControls {
@@ -302,5 +302,45 @@
 
     .deleteBtn {
         margin-left: 0;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        max-width: 96%;
+        padding: 16px;
+
+        .formInfo,
+        .questionsContainer {
+            padding: 16px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 12px;
+
+        .formInfo,
+        .questionsContainer {
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .questionControls {
+            gap: 10px;
+        }
+
+        .typeSelector {
+            width: 100%;
+        }
+
+        .requiredCheckbox {
+            width: 100%;
+        }
+
+        .addQuestionBtn {
+            width: 100%;
+        }
     }
 }

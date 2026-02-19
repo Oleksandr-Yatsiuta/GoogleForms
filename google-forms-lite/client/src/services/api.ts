@@ -1,8 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { graphqlRequestBaseQuery } from '@rtk-query/graphql-request-base-query'
 import { gql } from 'graphql-request'
-import type { Form, FormInput } from '../features/forms/form'
-import type { Response, AnswerInput } from '../features/responses/response'
+import type { Form, FormInput, Response, AnswerInput } from '../../../types/form.types'
 
 /**
  * RTK Query API - handles all GraphQL requests with automatic caching
