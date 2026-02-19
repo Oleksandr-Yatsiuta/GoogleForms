@@ -1,39 +1,56 @@
 export type QuestionType = 'TEXT' | 'MULTIPLE_CHOICE' | 'CHECKBOX' | 'DATE';
 
-
-// Single question in a form
-export interface FormQuestion {
+export interface Question {
   id: string;
   title: string;
   type: QuestionType;
+  options?: string[];
   required?: boolean;
-  options?: string[]; 
 }
 
+export type FormQuestion = Question;
 
-// Complete form with questions
 export interface Form {
   id: string;
   title: string;
   description?: string;
-  questions: FormQuestion[];
+  questions: Question[];
   createdAt?: string;
 }
 
-// Input type wich sends to server
+export interface QuestionInput {
+  id?: string;
+  title: string;
+  type: QuestionType;
+  options?: string[];
+  required?: boolean;
+}
+
+export type FormQuestionInput = QuestionInput;
+
 export interface FormInput {
   title: string;
   description?: string;
   questions: FormQuestionInput[];
 }
 
-// Input type for one question
-export interface FormQuestionInput {
-  title: string;
-  type: QuestionType;
-  required?: boolean;
-  options?: string[];
+export interface Answer {
+  questionId: string;
+  value: string | string[];
 }
+
+export interface AnswerInput {
+  questionId: string;
+  value: string | string[];
+}
+
+export interface Response {
+  id: string;
+  formId: string;
+  answers: Answer[];
+  submittedAt?: string;
+}
+
 export interface QuestionCardProps {
   question: FormQuestion;
   isEditing: boolean;

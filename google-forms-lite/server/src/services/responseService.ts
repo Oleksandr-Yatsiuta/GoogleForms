@@ -1,5 +1,5 @@
 import { store } from '../data/store';
-import { Response, Answer } from '../types/form.types';
+import type { Response, Answer } from '../../../types/form.types';
 
 export class ResponseService {
   static submitResponse(formId: string, answers: Answer[]): Response | null {

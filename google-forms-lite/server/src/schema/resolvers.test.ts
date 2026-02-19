@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { resolvers } from './resolvers';
 import { FormService } from '../services/formService';
 import { ResponseService } from '../services/responseService';
-import { Form, Response } from '../types/form.types';
+import type { Form, Response } from '../../../types/form.types';
 
 describe('GraphQL Resolvers', () => {
   // Reset all mocks before each test

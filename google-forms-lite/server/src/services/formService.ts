@@ -1,6 +1,5 @@
-import { QuestionInput } from 'src/types/resolver.types';
 import { store } from '../data/store';
-import { Form, Question } from '../types/form.types';
+import type { QuestionInput, Form, Question } from '../../../types/form.types';
 
 export class FormService {
     static createForm(title: string, description?: string, questions: QuestionInput[] = []): Form {

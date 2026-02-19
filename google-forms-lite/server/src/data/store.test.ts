@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { store } from './store';
-import { Form, Question } from '../types/form.types';
+import type { Form, Question } from '../../../types/form.types';
 
 describe('Store', () => {
   beforeEach(() => {

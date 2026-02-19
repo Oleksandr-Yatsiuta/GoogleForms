@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import FormBuilderHeader from '../../components/FormBuiderHeader';
 import styles from './ResponsesPage.module.scss';
-import { FormQuestion } from '../../features/forms/form';
+import type { FormQuestion } from '../../../../types/form.types';
 import { useGetFormQuery, useGetResponsesQuery } from '../../services/api';
 import { formatDate, formatAnswer } from '../../utils/formatters';
 
