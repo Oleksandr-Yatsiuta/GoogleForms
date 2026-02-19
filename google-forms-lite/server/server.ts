@@ -5,6 +5,7 @@ import { buildSchema } from 'graphql';
 import { typeDefs } from './src/schema/typeDefs';
 import { resolvers } from './src/schema/resolvers';
 import { store } from './src/data/store';
+import { errorHandler, formatGraphQLError, HttpError } from './src/middleware/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -24,6 +25,7 @@ app.use(
     schema,
     rootValue,
     graphiql: true,
+    customFormatErrorFn: formatGraphQLError,
   })
 );
 
@@ -40,6 +42,12 @@ app.get('/debug', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({ status: 'OK' });
 });
+
+app.use((req, _res, next) => {
+  next(new HttpError(`Route ${req.method} ${req.originalUrl} not found`, 404, 'NOT_FOUND'));
+});
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

@@ -1,4 +1,4 @@
-import { Form, Question, Response, Answer } from '../types/form.types';
+import type { Form, Question, Response, Answer } from '../../../types/form.types';
 
 // In-memory store for forms and responses.
 class Store {
