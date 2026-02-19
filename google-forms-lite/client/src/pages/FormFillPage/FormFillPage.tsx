@@ -97,7 +97,7 @@ export default function FormFillPage() {
                 <input
                   type="date"
                   required={question.required}
-                  className={styles.textInput}
+                  className={`${styles.textInput} && ${styles.dateInput}`}
                   onChange={(e) => handleInputChange(question.id, e.target.value)}
                 />
               )}

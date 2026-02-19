@@ -1,57 +1,46 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormBuilderHeader from '../components/FormBuiderHeader';
+import FormBuilderHeader from '../../components/FormBuiderHeader';
 import styles from './ResponsesPage.module.scss';
 import { FormQuestion } from '../../features/forms/form';
 import { useGetFormQuery, useGetResponsesQuery } from '../../services/api';
+import { formatDate, formatAnswer } from '../../utils/formatters';
 
 const ITEMS_PER_PAGE = 1;
+
 
 export default function ResponsesPage() {
   const { formId } = useParams<{ formId: string }>();
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Fetch form data
   const {
     data: form,
     isLoading: isFormLoading,
     isError: isFormError,
   } = useGetFormQuery(formId ?? '', { skip: !formId });
 
+
+// Fetch responses for this form
   const {
     data: responses = [],
     isLoading: isResponsesLoading,
     isError: isResponsesError,
   } = useGetResponsesQuery(formId ?? '', { skip: !formId });
 
+
+  // Pagination logic
   const totalPages = Math.ceil(responses.length / ITEMS_PER_PAGE);
   const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedResponses = responses.slice(startIdx, startIdx + ITEMS_PER_PAGE);
 
+
+  // Get question details by ID
   const getQuestionById = (questionId: string): FormQuestion | undefined => {
     return form?.questions.find((q) => q.id === questionId);
   };
 
-  const formatDate = (dateString: string | undefined) => {
-    if (!dateString) return 'N/A';
-    return new Date(dateString).toLocaleDateString('uk-UA', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const formatAnswer = (value: string | string[] | boolean) => {
-    if (Array.isArray(value)) {
-      return value.join(', ');
-    }
-    if (typeof value === 'boolean') {
-      return value ? 'Yes' : 'No';
-    }
-    return value;
-  };
-
+// Handle missing form ID
   if (!formId) {
     return (
       <div className={styles.responsesPage}>
@@ -65,6 +54,7 @@ export default function ResponsesPage() {
     );
   }
 
+   // Loading state
   if (isFormLoading || isResponsesLoading) {
     return (
       <div className={styles.responsesPage}>
@@ -78,6 +68,8 @@ export default function ResponsesPage() {
     );
   }
 
+
+  // Error state
   if (isFormError || isResponsesError || !form) {
     return (
       <div className={styles.responsesPage}>

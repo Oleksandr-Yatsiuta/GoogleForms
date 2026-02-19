@@ -1,31 +1,6 @@
-export interface Answer {
-  questionId: string;
-  value: string | string[];
-}
+import { Form, Question, Response, Answer } from '../types/form.types';
 
-export interface Response {
-  id: string;
-  formId: string;
-  answers: Answer[];
-  submittedAt: string;
-}
-
-export interface Question {
-  id: string;
-  title: string;
-  type: 'TEXT' | 'MULTIPLE_CHOICE' | 'CHECKBOX' | 'DATE';
-  options?: string[];
-  required: boolean;
-}
-
-export interface Form {
-  id: string;
-  title: string;
-  description?: string;
-  questions: Question[];
-  createdAt: string;
-}
-
+// In-memory store for forms and responses.
 class Store {
   private forms: Map<string, Form> = new Map();
   private responses: Map<string, Response[]> = new Map();
@@ -33,6 +8,7 @@ class Store {
   private responseIdCounter = 1;
   private questionIdCounter = 1;
 
+  // Creates a new form.
   createForm(title: string, description?: string, questions: Question[] = []): Form {
     const id = `form-${this.formIdCounter++}`;
     const form: Form = {
@@ -50,6 +26,7 @@ class Store {
     return form;
   }
 
+  // Updates an existing form by ID.
   updateForm(id: string, title: string, description?: string, questions: Question[] = []): Form | null {
     const existingForm = this.forms.get(id);
     if (!existingForm) return null;
@@ -67,14 +44,17 @@ class Store {
     return updatedForm;
   }
 
+  // Returns all forms.
   getForms(): Form[] {
     return Array.from(this.forms.values());
   }
 
+  // Returns one form by ID.
   getForm(id: string): Form | undefined {
     return this.forms.get(id);
   }
 
+  // Saves a response for a form.
   submitResponse(formId: string, answers: Answer[]): Response | null {
     if (!this.forms.has(formId)) return null;
 
@@ -93,6 +73,7 @@ class Store {
     return response;
   }
 
+  // Returns all responses for a form.
   getResponses(formId: string): Response[] {
     return this.responses.get(formId) || [];
   }

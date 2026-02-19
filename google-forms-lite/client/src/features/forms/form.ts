@@ -1,5 +1,7 @@
 export type QuestionType = 'TEXT' | 'MULTIPLE_CHOICE' | 'CHECKBOX' | 'DATE';
 
+
+// Single question in a form
 export interface FormQuestion {
   id: string;
   title: string;
@@ -8,6 +10,8 @@ export interface FormQuestion {
   options?: string[]; 
 }
 
+
+// Complete form with questions
 export interface Form {
   id: string;
   title: string;
@@ -16,12 +20,14 @@ export interface Form {
   createdAt?: string;
 }
 
+// Input type wich sends to server
 export interface FormInput {
   title: string;
   description?: string;
   questions: FormQuestionInput[];
 }
 
+// Input type for one question
 export interface FormQuestionInput {
   title: string;
   type: QuestionType;

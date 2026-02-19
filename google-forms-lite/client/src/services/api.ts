@@ -4,13 +4,19 @@ import { gql } from 'graphql-request'
 import type { Form, FormInput } from '../features/forms/form'
 import type { Response, AnswerInput } from '../features/responses/response'
 
+/**
+ * RTK Query API - handles all GraphQL requests with automatic caching
+ */
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: graphqlRequestBaseQuery({
     url: 'http://localhost:4000/graphql',
   }),
+  // Cache invalidation strategy
   tagTypes: ['Form', 'Response'],
+  
   endpoints: (builder) => ({
+    // Get all forms - used in HomePage
     getForms: builder.query<Form[], void>({
       query: () => ({
         document: gql`
@@ -28,6 +34,7 @@ export const api = createApi({
       providesTags: ['Form'],
     }),
 
+    // Get single form with questions - used in FormBuilderPage, ResponsesPage, FormFillPage
     getForm: builder.query<Form, string>({
       query: (id) => ({
         document: gql`
@@ -53,6 +60,7 @@ export const api = createApi({
       providesTags: (result, error, id) => [{ type: 'Form' as const, id }],
     }),
 
+    // Get form responses - used in ResponsesPage
     getResponses: builder.query<Response[], string>({
       query: (formId) => ({
         document: gql`
@@ -74,6 +82,7 @@ export const api = createApi({
       providesTags: (result, error, formId) => [{ type: 'Response' as const, id: formId }],
     }),
 
+    // Create new form - invalidates all Form cache
     createForm: builder.mutation<Form, FormInput>({
       query: (input) => ({
         document: gql`
@@ -96,6 +105,7 @@ export const api = createApi({
       invalidatesTags: ['Form'],
     }),
 
+    // Update existing form - invalidates all Form cache
     updateForm: builder.mutation<Form, { id: string } & FormInput>({
       query: ({ id, ...input }) => ({
         document: gql`
@@ -126,6 +136,7 @@ export const api = createApi({
       invalidatesTags: ['Form'],
     }),
 
+    // Submit form response - invalidates only specific form's responses
     submitResponse: builder.mutation<Response, { formId: string; answers: AnswerInput[] }>({
       query: ({ formId, answers }) => ({
         document: gql`
@@ -149,6 +160,7 @@ export const api = createApi({
   }),
 })
 
+// Auto-generated hooks for components
 export const {
   useGetFormsQuery,
   useGetFormQuery,

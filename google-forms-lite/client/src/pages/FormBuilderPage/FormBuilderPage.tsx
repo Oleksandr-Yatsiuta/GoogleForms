@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './FormBuilderPage.module.scss';
 import { Form, FormQuestion, QuestionType, QuestionCardProps } from '../../features/forms/form';
-import FormBuilderHeader from '../components/FormBuiderHeader';
+import FormBuilderHeader from '../../components/FormBuiderHeader';
 import { useCreateFormMutation, useGetFormQuery, useUpdateFormMutation } from '../../services/api';
-
 
 export default function FormBuilderPage() {
   const { formId } = useParams<{ formId: string }>();
@@ -13,7 +12,6 @@ export default function FormBuilderPage() {
   const { data: existingForm, isLoading } = useGetFormQuery(formId || '', {
     skip: !formId || formId === 'new',
   });
-
 
   const [form, setForm] = useState<Form>({
     id: Date.now().toString(),
@@ -30,23 +28,28 @@ export default function FormBuilderPage() {
 
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
 
+  // Load form data in edit mode.
   useEffect(() => {
     if (existingForm) {
       setForm(existingForm);
     }
   }, [existingForm]);
+
   if (isLoading) {
     return <div>Loading form...</div>;
   }
 
+  // Update form title.
   const handleFormTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, title: e.target.value });
   };
 
+  // Update form description.
   const handleFormDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm({ ...form, description: e.target.value });
   };
 
+  // Add a new question.
   const addQuestion = () => {
     const newQuestion: FormQuestion = {
       id: Date.now().toString(),
@@ -57,6 +60,7 @@ export default function FormBuilderPage() {
     setForm({ ...form, questions: [...form.questions, newQuestion] });
   };
 
+  // Update one question by ID.
   const updateQuestion = (id: string, updates: Partial<FormQuestion>) => {
     setForm({
       ...form,
@@ -64,6 +68,7 @@ export default function FormBuilderPage() {
     });
   };
 
+  // Remove a question (keep at least one).
   const deleteQuestion = (id: string) => {
     if (form.questions.length === 1) {
       return;
@@ -74,12 +79,14 @@ export default function FormBuilderPage() {
     });
   };
 
+  // Add option to a choice question.
   const addOption = (questionId: string) => {
     updateQuestion(questionId, {
       options: [...(form.questions.find((q) => q.id === questionId)?.options || []), 'New option'],
     });
   };
 
+  // Update one option value.
   const updateOption = (questionId: string, optionIndex: number, value: string) => {
     const question = form.questions.find((q) => q.id === questionId);
     if (question?.options) {
@@ -89,6 +96,7 @@ export default function FormBuilderPage() {
     }
   };
 
+  // Delete one option.
   const deleteOption = (questionId: string, optionIndex: number) => {
     const question = form.questions.find((q) => q.id === questionId);
     if (question?.options) {
@@ -97,7 +105,7 @@ export default function FormBuilderPage() {
     }
   };
 
-
+  // Save form (create or update).
   const handleSaveForm = async () => {
     try {
       const payload = {
@@ -112,11 +120,9 @@ export default function FormBuilderPage() {
       };
 
       if (formId && formId !== 'new') {
-        // Оновлюємо існуючу форму
         console.log('updateForm payload', payload);
         await updateForm({ id: formId, ...payload });
       } else {
-        // Створюємо нову форму
         console.log('createForm payload', payload);
         await createForm(payload);
       }
@@ -124,7 +130,6 @@ export default function FormBuilderPage() {
       console.error('Save form failed:', error);
     }
   };
-
 
   return (
     <div className={styles.formBuilder}>
@@ -177,7 +182,7 @@ export default function FormBuilderPage() {
   );
 }
 
-
+// Renders one editable question card.
 function QuestionCard({
   question,
   isEditing,
@@ -201,7 +206,7 @@ function QuestionCard({
         />
       </div>
 
-      {/* Question Type Selector */}
+      {/* Question type selector */}
       <div className={styles.questionControls}>
         <select
           className={styles.typeSelector}
@@ -228,7 +233,7 @@ function QuestionCard({
         </button>
       </div>
 
-      {/* Options for Multiple Choice and Checkbox */}
+      {/* Options for choice-based questions */}
       {(question.type === 'MULTIPLE_CHOICE' || question.type === 'CHECKBOX') && (
         <div className={styles.optionsContainer}>
           {question.options?.map((option, index) => (
