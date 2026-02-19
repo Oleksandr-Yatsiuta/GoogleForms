@@ -2,7 +2,9 @@ import styles from './HomePage.module.scss';
 import { Link } from "react-router-dom";
 import { useGetFormsQuery } from '../../services/api';
 
+
 export default function HomePage() {
+   // Fetch all forms with automatic caching
   const { data: forms = [], isLoading } = useGetFormsQuery();
 
   return (

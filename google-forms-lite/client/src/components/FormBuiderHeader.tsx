@@ -1,5 +1,5 @@
 import { Link, NavLink, useParams } from 'react-router-dom';
-import styles from '../FormBuilderPage/FormBuilderPage.module.scss';
+import styles from './FormBuilderHeader.module.scss';
 
 interface FormBuilderHeaderProps {
     formId: string;
