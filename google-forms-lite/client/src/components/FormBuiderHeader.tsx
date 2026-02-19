@@ -14,7 +14,7 @@ export default function FormBuilderHeader({ formId, onSave }: FormBuilderHeaderP
         <header className={styles.header}>
             <div className={styles.headerContent}>
                 <div className={styles.leftSide}>
-                    <NavLink to="/"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968528.png" /></NavLink>
+                    <NavLink to="/"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968528.png" alt='Google-img'/></NavLink>
                     <p>{isEditing ? 'Edit Form' : 'New Form'}</p>
                 </div>
 

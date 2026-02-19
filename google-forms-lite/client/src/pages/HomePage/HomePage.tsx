@@ -19,9 +19,9 @@ export default function HomePage() {
             <img src="https://img.icons8.com/?size=100&id=e4NkZ7kWAD7f&format=png&color=00448e" alt="Search Icon" />
             <input type="text" placeholder="Search forms..." className={styles.searchInput} />
           </div>
-          <a className={styles.createFormLink}>
+          <Link to="/" className={styles.createFormLink}>
             <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User profile" />
-          </a>
+          </Link>
         </div>
       </section>
 
