@@ -3,6 +3,7 @@ import { GraphQLError } from 'graphql';
 import type { Request, Response, NextFunction } from 'express';
 import { HttpError, errorHandler, formatGraphQLError } from './errorHandler';
 
+// Helper to create a mock Express response object
 const createMockResponse = (headersSent = false): Response => {
 	const response = {
 		headersSent,
@@ -14,15 +15,22 @@ const createMockResponse = (headersSent = false): Response => {
 };
 
 describe('errorHandler middleware', () => {
+	// -----------------------------
+	// Test behavior when headers already sent
+	// -----------------------------
 	it('returns immediately when headers already sent', () => {
 		const res = createMockResponse(true);
 
 		errorHandler(new Error('Already handled'), {} as Request, res, vi.fn() as NextFunction);
 
+		// Should not call status/json since headers are sent
 		expect(res.status).not.toHaveBeenCalled();
 		expect(res.json).not.toHaveBeenCalled();
 	});
 
+	// -----------------------------
+	// Test handling of custom HttpError
+	// -----------------------------
 	it('returns custom HttpError response', () => {
 		const res = createMockResponse();
 
@@ -33,6 +41,7 @@ describe('errorHandler middleware', () => {
 			vi.fn() as NextFunction
 		);
 
+		// Should return correct HTTP status and JSON payload
 		expect(res.status).toHaveBeenCalledWith(404);
 		expect(res.json).toHaveBeenCalledWith({
 			error: {
@@ -42,6 +51,9 @@ describe('errorHandler middleware', () => {
 		});
 	});
 
+	// -----------------------------
+	// Test handling of JSON parsing errors
+	// -----------------------------
 	it('returns 400 for SyntaxError', () => {
 		const res = createMockResponse();
 
@@ -56,6 +68,9 @@ describe('errorHandler middleware', () => {
 		});
 	});
 
+	// -----------------------------
+	// Test handling of unknown errors
+	// -----------------------------
 	it('returns 500 for unknown errors', () => {
 		const res = createMockResponse();
 
@@ -72,6 +87,9 @@ describe('errorHandler middleware', () => {
 });
 
 describe('formatGraphQLError', () => {
+	// -----------------------------
+	// Test formatting of GraphQL errors for known HttpError
+	// -----------------------------
 	it('formats HttpError with custom message and extensions', () => {
 		const graphQLError = new GraphQLError('Request failed', {
 			path: ['createForm'],
@@ -88,6 +106,9 @@ describe('formatGraphQLError', () => {
 		});
 	});
 
+	// -----------------------------
+	// Test formatting of GraphQL errors for unknown errors
+	// -----------------------------
 	it('hides details for unknown GraphQL errors', () => {
 		const graphQLError = new GraphQLError('Database exploded', {
 			path: ['submitResponse'],

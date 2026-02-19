@@ -17,41 +17,6 @@
             gap: 16px;
         }
 
-        .inputForm {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px;
-            width: 70%;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 30px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-
-            img {
-                width: 25px;
-                height: 25px;
-                padding: 4px;
-                cursor: pointer;
-            }
-
-            img:hover {
-                background-color: #f0f0f0;
-                border-radius: 100%;
-                cursor: pointer;
-            }
-
-            .searchInput {
-                padding: 4px;
-                border: none;
-                width: 80%;
-            }
-
-            .searchInput:focus {
-                outline: none;
-            }
-        }
-
         img {
             width: 40px;
             height: 40px;

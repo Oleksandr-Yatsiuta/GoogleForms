@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './FormBuilderPage.module.scss';
 import { Form, FormQuestion, QuestionType, QuestionCardProps } from '../../../../types/form.types';
-import FormBuilderHeader from '../../components/FormBuiderHeader';
+import FormBuilderHeader from '../../components/FormBuilderHeader/FormBuiderHeader';
 import { useCreateFormMutation, useGetFormQuery, useUpdateFormMutation } from '../../services/api';
 
 export default function FormBuilderPage() {
