@@ -1,6 +1,4 @@
-
 //  Format ISO date string to readable Ukrainian format
-
 export const formatDate = (dateString: string | undefined): string => {
   if (!dateString) return 'N/A';
   return new Date(dateString).toLocaleDateString('uk-UA', {

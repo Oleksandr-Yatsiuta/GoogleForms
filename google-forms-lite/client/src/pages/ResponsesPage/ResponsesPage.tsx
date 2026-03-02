@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import FormBuilderHeader from '../../components/FormBuilderHeader/FormBuiderHeader';
+import FormBuilderHeader from '../../components/FormBuilderHeader/FormBuilderHeader';
 import styles from './ResponsesPage.module.scss';
 import type { FormQuestion } from '../../../../types/form.types';
 import { useGetFormQuery, useGetResponsesQuery } from '../../services/api';
